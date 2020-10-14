@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8303852911281694454}
   - component: {fileID: 6131124651175735092}
   - component: {fileID: 4678710834946080266}
+  - component: {fileID: -7629725503708687807}
   m_Layer: 0
   m_Name: PlayerPref
   m_TagString: Untagged
@@ -125,3 +126,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveScale: 0.5
+--- !u!114 &-7629725503708687807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4541834714982059286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c700958d515748eb8e73d391056026a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -26,10 +26,9 @@ namespace Entity
             _down = Input.GetKey(KeyCode.S);
             _left = Input.GetKey(KeyCode.A);
             _right = Input.GetKey(KeyCode.D);
-            Debug.LogWarning("poll key~~");
         }
 
-        public override void SimulateOwner()
+        private void Update()
         {
             PollKeys();
         }
