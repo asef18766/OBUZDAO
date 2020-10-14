@@ -11,7 +11,7 @@ namespace Networking
         public static void CreatePlayer(BoltConnection connection)
         {
             var player = BoltNetwork.Instantiate(BoltPrefabs.PlayerPref, Vector3.zero, Quaternion.identity);
-            //player.AssignControl(connection);
+            player.AssignControl(connection);
             _playerList.Add(connection.ConnectionId, player);
         }
     }

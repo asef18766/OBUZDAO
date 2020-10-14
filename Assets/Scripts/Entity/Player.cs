@@ -29,11 +29,11 @@ namespace Entity
             Debug.LogWarning("poll key~~");
         }
 
-        private void Update()
+        public override void SimulateOwner()
         {
             PollKeys();
         }
-
+        
         public override void SimulateController()
         {
             var input = PlayerCmd.Create();
