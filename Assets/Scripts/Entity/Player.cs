@@ -26,25 +26,31 @@ namespace Entity
             _down = Input.GetKey(KeyCode.S);
             _left = Input.GetKey(KeyCode.A);
             _right = Input.GetKey(KeyCode.D);
+            Debug.LogWarning("poll key~~");
         }
-        
-        public override void SimulateController()
+
+        private void Update()
         {
             PollKeys();
-            var input = PlayerCmd.Create();
+        }
 
+        public override void SimulateController()
+        {
+            var input = PlayerCmd.Create();
+            
             input.Up = _up;
             input.Down = _down;
             input.Left = _left;
             input.Right = _right;
-
+            BoltLog.Warn("input receive");
             entity.QueueInput(input);
         }
 
         public override void ExecuteCommand(Command command, bool resetState)
         {
+            BoltLog.Warn("executing command");
             var cmd = (PlayerCmd) command;
-            
+
             if (resetState)
             {
                 // we got a correction from the server, reset (this only runs on the client)

@@ -1,8 +1,4 @@
-﻿using System;
-using Bolt.Matchmaking;
-using UnityEngine;
-
-namespace Networking.MainGame
+﻿namespace Networking.MainGame
 {
     [BoltGlobalBehaviour(BoltNetworkModes.Server,"MainGame")]
     public class ServerCallback : Bolt.GlobalEventListener
