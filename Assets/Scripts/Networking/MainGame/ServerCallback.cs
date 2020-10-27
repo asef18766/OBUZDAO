@@ -7,5 +7,10 @@
         {
             PlayerRegistry.CreatePlayer(connection);
         }
+
+        public override void Disconnected(BoltConnection connection)
+        {
+            PlayerRegistry.RemovePlayer(connection);
+        }
     }
 }
