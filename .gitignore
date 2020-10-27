@@ -76,3 +76,7 @@ crashlytics-build.properties
 # rider configs
 .idea
 .idea/*
+
+# production
+Production
+Production/*
