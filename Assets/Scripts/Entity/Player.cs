@@ -127,7 +127,7 @@ namespace Entity
         public void OnUpdateBag(string bagContent)
         {
             BoltLog.Warn("sending update bag event");
-            var bagUpdateEvent = OnUpdateBagContent.Create(entity);
+            var bagUpdateEvent = OnUpdateBagContent.Create(entity, EntityTargets.OnlyController);
             bagUpdateEvent.BagContent = bagContent;
             bagUpdateEvent.Send();
         }
