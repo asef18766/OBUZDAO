@@ -9,7 +9,7 @@ namespace Resources
         private const string AssetPath = "ScriptableObjects/ItemData.asset";
         private static ItemManager _instance = null;
         
-        [SerializeField] private ItemInfoStorage itemData;
+        [SerializeField] private ItemInfoStorage itemData = null;
         
         public static ItemManager GetInstance()
         {

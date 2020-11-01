@@ -10,5 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 260cea32946c4bd2b0ced1e63df92ba3, type: 3}
-  m_Name: New Item Manager
+  m_Name: ItemData
   m_EditorClassIdentifier: 
+  itemData:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues: 57000000
+    _keys: 57000000
+    _values:
+    - {fileID: 4722985037548168590, guid: 76869f9bba88e5248b299371ef217108, type: 3}

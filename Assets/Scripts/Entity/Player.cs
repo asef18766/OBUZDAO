@@ -30,6 +30,8 @@ namespace Entity
         private Vector2 DetectShoot()
         {
             var mousePos = Input.mousePosition;
+            if (Camera.main == null) throw new ArgumentException("can not found main camera");
+            
             mousePos.z = Camera.main.nearClipPlane;
             StartCoroutine(ShootIdle());
             return (Camera.main.ScreenToWorldPoint(mousePos) - transform.position).normalized;
@@ -120,6 +122,19 @@ namespace Entity
         public override void OnEvent(OnDamaged evnt)
         {
             BoltLog.Warn(evnt.TargetID);
+        }
+
+        public void OnUpdateBag(string bagContent)
+        {
+            BoltLog.Warn("sending update bag event");
+            var bagUpdateEvent = OnUpdateBagContent.Create(entity);
+            bagUpdateEvent.BagContent = bagContent;
+            bagUpdateEvent.Send();
+        }
+        public override void OnEvent(OnUpdateBagContent evnt)
+        {
+            BoltLog.Warn($"Client Receive bag content {Resources.Bag.DecodeBag(evnt.BagContent)}");
+            base.OnEvent(evnt);
         }
         #endregion
     }

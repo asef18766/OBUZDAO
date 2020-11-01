@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Resources
 {
@@ -29,7 +28,7 @@ namespace Resources
         {
             if (_playerInv.ContainsKey(playerId))
                 throw new IndexOutOfRangeException($"try to create bag with player id {playerId}");
-            _playerInv.Add(playerId, new Bag());
+            _playerInv.Add(playerId, new Bag {OwnerId = Convert.ToUInt32(playerId)});
         }
 
         public void RemovePlayerBag(int playerId)
