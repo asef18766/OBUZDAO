@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Bolt;
+using UnityEditor.UI;
 using UnityEngine;
 
 namespace Entity
@@ -30,6 +31,8 @@ namespace Entity
         private Vector2 DetectShoot()
         {
             var mousePos = Input.mousePosition;
+            if (Camera.main == null) throw new ArgumentException("can not found main camera");
+            
             mousePos.z = Camera.main.nearClipPlane;
             StartCoroutine(ShootIdle());
             return (Camera.main.ScreenToWorldPoint(mousePos) - transform.position).normalized;
@@ -55,7 +58,7 @@ namespace Entity
             _right = Input.GetKey(KeyCode.D);
             _triggerShoot = Input.GetMouseButton(0);
         }
-
+        
         private void Update()
         {
             PollKeys();
@@ -63,6 +66,9 @@ namespace Entity
 
         public override void SimulateController()
         {
+            if (!(_up || _down || _left || _right || (_canShoot && _triggerShoot)))
+                return;
+                
             var input = PlayerCmd.Create();
             
             input.Up = _up;
@@ -76,8 +82,14 @@ namespace Entity
                 input.AtkDir = DetectShoot();
                 input.Attack = true;
             }
-
+            print("simulate controller");
             entity.QueueInput(input);
+        }
+
+        public override void MissingCommand(Command previous)
+        {
+            if (previous == null) return;
+            ExecuteCommand(previous,true);
         }
 
         public override void ExecuteCommand(Command command, bool resetState)
@@ -120,6 +132,14 @@ namespace Entity
         public override void OnEvent(OnDamaged evnt)
         {
             BoltLog.Warn(evnt.TargetID);
+        }
+
+        public void OnUpdateBag(string bagContent)
+        {
+            BoltLog.Warn("sending update bag event");
+            var bagUpdateEvent = OnUpdateBagContent.Create(entity.Controller);
+            bagUpdateEvent.BagContent = bagContent;
+            bagUpdateEvent.Send();
         }
         #endregion
     }

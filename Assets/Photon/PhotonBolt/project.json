@@ -504,6 +504,30 @@
       "Name": "Bullet",
       "Guid": "5337e04c-0fe5-41d3-b37b-64ed376b179d",
       "Groups": []
+    },
+    {
+      "$type": "Bolt.Compiler.EventDefinition, bolt.compiler",
+      "Properties": [
+        {
+          "Name": "BagContent",
+          "Enabled": true,
+          "Expanded": true,
+          "ReplicationMode": 1,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeString, bolt.compiler",
+            "MaxLength": 100
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyEventSettings, bolt.compiler"
+          }
+        }
+      ],
+      "EntitySenders": 3,
+      "GlobalSenders": 1,
+      "Name": "OnUpdateBagContent",
+      "Guid": "a5b6a4bc-de61-4bf8-afda-c4ca5e4c3a6e",
+      "Groups": []
     }
   ],
   "ActiveGroup": "Everything"

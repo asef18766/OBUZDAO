@@ -3,7 +3,6 @@ using System.Collections;
 using Bolt.Matchmaking;
 using UdpKit;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Networking.Menu
 {

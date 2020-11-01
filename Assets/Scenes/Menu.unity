@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingPanel: {fileID: 1764887944}
   timeOutPanel: {fileID: 1293505671}
-  waitTime: 10
+  waitTime: 30
 --- !u!1 &1764887944
 GameObject:
   m_ObjectHideFlags: 0
