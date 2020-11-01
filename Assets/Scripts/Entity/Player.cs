@@ -66,6 +66,9 @@ namespace Entity
 
         public override void SimulateController()
         {
+            if (!(_up || _down || _left || _right || (_canShoot && _triggerShoot)))
+                return;
+                
             var input = PlayerCmd.Create();
             
             input.Up = _up;
@@ -79,8 +82,14 @@ namespace Entity
                 input.AtkDir = DetectShoot();
                 input.Attack = true;
             }
-
+            print("simulate controller");
             entity.QueueInput(input);
+        }
+
+        public override void MissingCommand(Command previous)
+        {
+            if (previous == null) return;
+            ExecuteCommand(previous,true);
         }
 
         public override void ExecuteCommand(Command command, bool resetState)
