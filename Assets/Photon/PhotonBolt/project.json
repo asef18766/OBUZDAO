@@ -523,8 +523,8 @@
           }
         }
       ],
-      "EntitySenders": 1,
-      "GlobalSenders": 3,
+      "EntitySenders": 3,
+      "GlobalSenders": 1,
       "Name": "OnUpdateBagContent",
       "Guid": "a5b6a4bc-de61-4bf8-afda-c4ca5e4c3a6e",
       "Groups": []

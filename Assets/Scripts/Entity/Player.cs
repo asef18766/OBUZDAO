@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Bolt;
+using UnityEditor.UI;
 using UnityEngine;
 
 namespace Entity
@@ -57,7 +58,7 @@ namespace Entity
             _right = Input.GetKey(KeyCode.D);
             _triggerShoot = Input.GetMouseButton(0);
         }
-
+        
         private void Update()
         {
             PollKeys();
@@ -127,13 +128,9 @@ namespace Entity
         public void OnUpdateBag(string bagContent)
         {
             BoltLog.Warn("sending update bag event");
-            var bagUpdateEvent = OnUpdateBagContent.Create(entity, EntityTargets.OnlyController);
+            var bagUpdateEvent = OnUpdateBagContent.Create(entity.Controller);
             bagUpdateEvent.BagContent = bagContent;
             bagUpdateEvent.Send();
-        }
-        public override void OnEvent(OnUpdateBagContent evnt)
-        {
-            BoltLog.Warn($"Client Receive bag content {Resources.Bag.DecodeBag(evnt.BagContent)}");
         }
         #endregion
     }

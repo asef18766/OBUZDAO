@@ -9,5 +9,10 @@ namespace Networking.MainGame
         {
             Debug.LogWarning($"conn id : {connection.ConnectionId}");
         }
+        public override void OnEvent(OnUpdateBagContent evnt)
+        {
+            BoltLog.Warn($"Client Receive bag content {Resources.Bag.DecodeBag(evnt.BagContent)}");
+        }
+
     }
 }
