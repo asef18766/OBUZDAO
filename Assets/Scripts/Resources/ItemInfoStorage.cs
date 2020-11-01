@@ -1,8 +1,15 @@
-﻿using RotaryHeart.Lib.SerializableDictionary;
+﻿using System;
+using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
 
 namespace Resources
 {
-    [System.Serializable]
-    public class ItemInfoStorage:SerializableDictionaryBase<int, GameObject> { }
+    [Serializable]
+    public struct ItemMetaDataCollection
+    {
+        public Sprite Icon;
+        public GameObject Usage;
+    }
+    [Serializable]
+    public class ItemInfoStorage:SerializableDictionaryBase<int, ItemMetaDataCollection> { }
 }

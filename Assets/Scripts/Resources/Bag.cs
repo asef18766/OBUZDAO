@@ -21,6 +21,11 @@ public struct ItemInfo
     {
         return info1.Id > info2.Id;
     }
+
+    public override string ToString()
+    {
+        return $"(id:{Id},amount:{Amount})";
+    }
 }
 namespace Resources
 {
@@ -61,11 +66,14 @@ namespace Resources
 
         public string EncodeBag()
         {
-            return _inventory.Aggregate("", (current, it) => current + (Convert.ToChar(it.Key) + Convert.ToChar(it.Value)));
+            return _inventory.Aggregate("", (current, it) => current + 
+                $"{Convert.ToChar(it.Key)}{Convert.ToChar(it.Value)}");
         }
 
         public static List<ItemInfo> DecodeBag(string encode)
         {
+            BoltLog.Warn($"encode string length:{encode.Length}");
+            
             var ret = new List<ItemInfo>();
             for (var i = 0; i < encode.Length; i+=2)
             {

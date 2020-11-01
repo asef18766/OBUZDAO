@@ -11,8 +11,12 @@ namespace Networking.MainGame
         }
         public override void OnEvent(OnUpdateBagContent evnt)
         {
-            BoltLog.Warn($"Client Receive bag content {Resources.Bag.DecodeBag(evnt.BagContent)}");
+            BoltLog.Warn($"Client Receive bag content [{string.Join("," , Resources.Bag.DecodeBag(evnt.BagContent))}]");
         }
 
+        public override void OnEvent(OnPlayerDeath evnt)
+        {
+            BoltLog.Warn($"player with id {evnt.DeathId} dead");
+        }
     }
 }
