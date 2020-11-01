@@ -134,7 +134,6 @@ namespace Entity
         public override void OnEvent(OnUpdateBagContent evnt)
         {
             BoltLog.Warn($"Client Receive bag content {Resources.Bag.DecodeBag(evnt.BagContent)}");
-            base.OnEvent(evnt);
         }
         #endregion
     }

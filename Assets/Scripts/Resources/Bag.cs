@@ -69,7 +69,7 @@ namespace Resources
             var ret = new List<ItemInfo>();
             for (var i = 0; i < encode.Length; i+=2)
             {
-                ret.Add(new ItemInfo(Convert.ToInt32(ret[i]) , Convert.ToInt32(ret[i+1])));
+                ret.Add(new ItemInfo(Convert.ToInt32(encode[i]) , Convert.ToInt32(encode[i+1])));
             }
             
             return ret;
