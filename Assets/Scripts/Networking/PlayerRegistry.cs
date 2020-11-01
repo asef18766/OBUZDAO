@@ -19,7 +19,6 @@ namespace Networking
             var playerScript = player.GetComponent<Player>();
             playerScript.playerId = Convert.ToInt32(connection.ConnectionId);
             BagManager.CreatePlayerBag(playerScript.playerId);
-            BagManager.GetBag(playerScript.playerId).InsertItem(87, 3);
         }
 
         public static void RemovePlayer(BoltConnection connection)
