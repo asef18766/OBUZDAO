@@ -84,6 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4037454452459827180}
   - component: {fileID: 1564967838997970220}
+  - component: {fileID: 7468215103788736952}
   m_Layer: 5
   m_Name: Gun Unit
   m_TagString: Untagged
@@ -106,9 +107,9 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: -100}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1800, y: -100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1564967838997970220
@@ -121,5 +122,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6015b6d72edd3a4f911a85d88646873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7468215103788736952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537094668278672348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ee06611dc417344ae280c330b4ef9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
