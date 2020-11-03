@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Networking.MainGame
 {
-    [BoltGlobalBehaviour(BoltNetworkModes.Server,"MainGame")]
+    [BoltGlobalBehaviour(BoltNetworkModes.Server, "MainGame")]
     public class ServerCallback : GlobalEventListener
     {
         public override void Connected(BoltConnection connection)
@@ -25,13 +25,13 @@ namespace Networking.MainGame
             BoltNetwork.Instantiate(BoltPrefabs.CrackableTerrian, new Vector3(4, 4, 0), Quaternion.identity);
             BoltNetwork.Instantiate(BoltPrefabs.CrackableTerrian, new Vector3(-7, 4, 0), Quaternion.identity).GetComponent<CrackableTerrain>().spawnItems = new List<ItemInfo>
             {
-                new ItemInfo(0,1)
+                new ItemInfo(0, 1)
             };
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
         {
-            BagManager.GetInstance().GetBag(Convert.ToInt32(connection.ConnectionId) ).InsertItem(87, 3);
+            BagManager.GetInstance().GetBag(Convert.ToInt32(connection.ConnectionId)).InsertItem(87, 3);
         }
     }
 }
