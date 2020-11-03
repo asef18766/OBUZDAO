@@ -545,7 +545,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    1: BOLT_CLOUD
+    1: BOLT_CLOUD;RH_SerializedDictionary
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}

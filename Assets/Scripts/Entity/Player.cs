@@ -1,35 +1,40 @@
 ﻿using System;
 using System.Collections;
 using Bolt;
+using Networking;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Entity
 {
-    public class Player : EntityEventListener<IPlayer>
+    public class Player : EntityEventListener<IPlayer> , IDestroyable
     {
-        private bool _up;
-        private bool _down;
-        private bool _left;
-        private bool _right;
-        private PlayerAppearance _playerAppearance;
+        private bool up;
+        private bool down;
+        private bool left;
+        private bool right;
+        private PlayerAppearance playerAppearance;
         public int playerId;
-
+        private int health = 100;
+        
         #region Shoot_Manipulation
         
         [SerializeField] private float shootDelay = 0.5f;
-        private bool _canShoot = true;
-        private bool _triggerShoot = false;
+        private bool canShoot = true;
+        private bool triggerShoot = false;
         
         private IEnumerator ShootIdle()
         {
-            _canShoot = false;
+            canShoot = false;
             yield return new WaitForSeconds(shootDelay);
-            _canShoot = true;
+            canShoot = true;
         }
 
         private Vector2 DetectShoot()
         {
             var mousePos = Input.mousePosition;
+            if (Camera.main == null) throw new ArgumentException("can not found main camera");
+            
             mousePos.z = Camera.main.nearClipPlane;
             StartCoroutine(ShootIdle());
             return (Camera.main.ScreenToWorldPoint(mousePos) - transform.position).normalized;
@@ -40,7 +45,7 @@ namespace Entity
         
         private void Awake()
         {
-            _playerAppearance = GetComponent<PlayerAppearance>();
+            playerAppearance = GetComponent<PlayerAppearance>();
         }
 
         public override void Attached()
@@ -49,13 +54,13 @@ namespace Entity
         }
         private void PollKeys()
         {
-            _up= Input.GetKey(KeyCode.W);
-            _down = Input.GetKey(KeyCode.S);
-            _left = Input.GetKey(KeyCode.A);
-            _right = Input.GetKey(KeyCode.D);
-            _triggerShoot = Input.GetMouseButton(0);
+            up= Input.GetKey(KeyCode.W);
+            down = Input.GetKey(KeyCode.S);
+            left = Input.GetKey(KeyCode.A);
+            right = Input.GetKey(KeyCode.D);
+            triggerShoot = Input.GetMouseButton(0);
         }
-
+        
         private void Update()
         {
             PollKeys();
@@ -63,21 +68,39 @@ namespace Entity
 
         public override void SimulateController()
         {
+            if (!(up || down || left || right || (canShoot && triggerShoot)))
+                return;
+                
             var input = PlayerCmd.Create();
             
-            input.Up = _up;
-            input.Down = _down;
-            input.Left = _left;
-            input.Right = _right;
+            input.Up = up;
+            input.Down = down;
+            input.Left = left;
+            input.Right = right;
             input.Attack = false;
             
-            if (_canShoot && _triggerShoot)
+            if (canShoot && triggerShoot)
             {
                 input.AtkDir = DetectShoot();
                 input.Attack = true;
             }
+            print("simulate controller");
+            try
+            {
+                entity.QueueInput(input);
+            }
+            catch (Exception e)
+            {
+                BoltLog.Error(e);
+                entity.ClearInputQueue();
+            }
+            
+        }
 
-            entity.QueueInput(input);
+        public override void MissingCommand(Command previous)
+        {
+            if (previous == null) return;
+            ExecuteCommand(previous,true);
         }
 
         public override void ExecuteCommand(Command command, bool resetState)
@@ -87,7 +110,7 @@ namespace Entity
             if (resetState)
             {
                 // we got a correction from the server, reset (this only runs on the client)
-                _playerAppearance.transform.position = cmd.Result.Axes;
+                playerAppearance.transform.position = cmd.Result.Axes;
             }
             else
             {
@@ -98,28 +121,44 @@ namespace Entity
                 if(cmd.Input.Right) mvDir+= Vector3.right;
                 
                 // apply movement (this runs on both server and client)
-                _playerAppearance.Move(mvDir.normalized);
+                playerAppearance.Move(mvDir.normalized);
                 
                 // copy the motor state to the commands result (this gets sent back to the client)
-                cmd.Result.Axes = _playerAppearance.transform.position;
+                cmd.Result.Axes = playerAppearance.transform.position;
                 
                 if(BoltNetwork.IsClient) return;
-                if (!cmd.Input.Attack || !_canShoot) return;
+                if (!cmd.Input.Attack || !canShoot) return;
                 StartCoroutine(ShootIdle());
                 Bullet.SpawnBullet(playerId, cmd.Input.AtkDir, transform.position);
             }
         }
 
         #region Game_Events
-        public void OnHurt()
+        public void OnHurt(int dmg)
         {
-            var dmgEvent = OnDamaged.Create(entity);
+            BoltLog.Warn($"player {playerId} get hurt for {dmg}");
+            health -= dmg;
+            
+            var dmgEvent = OnDamaged.Create(entity ,EntityTargets.OnlyController);
             dmgEvent.TargetID = Convert.ToInt32(playerId) ;
+            dmgEvent.Dmg = dmg;
             dmgEvent.Send();
+
+            if (health > 0) return;
+            OnPlayerDeath.Post(GlobalTargets.AllClients, playerId);
+            PlayerRegistry.RemovePlayer(Convert.ToUInt32(playerId));
         }
         public override void OnEvent(OnDamaged evnt)
         {
-            BoltLog.Warn(evnt.TargetID);
+            BoltLog.Warn($"target id {evnt.TargetID} get hurt for {evnt.Dmg}");
+        }
+        
+        public void OnUpdateBag(string bagContent)
+        {
+            BoltLog.Warn("sending update bag event");
+            var bagUpdateEvent = OnUpdateBagContent.Create(entity.Controller);
+            bagUpdateEvent.BagContent = bagContent;
+            bagUpdateEvent.Send();
         }
         #endregion
     }
