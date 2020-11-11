@@ -80,3 +80,7 @@ crashlytics-build.properties
 # production
 Production
 Production/*
+
+# Bolt Debug
+Bolt_DebugStart_Build
+Bolt_DebugStart_Build/*
