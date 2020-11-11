@@ -1,4 +1,5 @@
-﻿using Entity;
+﻿using CameraOperation;
+using Entity;
 using UnityEngine;
 
 namespace Networking.MainGame
@@ -19,7 +20,7 @@ namespace Networking.MainGame
         {
             var player = entity.GetComponent<Player>();
             if (player == null) return;
-            if (Camera.main != null) Camera.main.transform.SetParent(player.gameObject.transform);
+            if (Camera.main != null) Camera.main.gameObject.AddComponent<CameraController>().FollowTarget = player.transform;
         }
 
         public override void OnEvent(OnPlayerDeath evnt)

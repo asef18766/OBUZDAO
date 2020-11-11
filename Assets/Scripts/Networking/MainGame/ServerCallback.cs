@@ -27,6 +27,7 @@ namespace Networking.MainGame
             {
                 new ItemInfo(0,1)
             };
+            BoltNetwork.Instantiate(BoltPrefabs.Archer, new Vector3(8, -4, 0), Quaternion.identity);
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
