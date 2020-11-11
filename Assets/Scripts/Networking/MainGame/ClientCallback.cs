@@ -20,6 +20,8 @@ namespace Networking.MainGame
             var player = entity.GetComponent<Player>();
             if (player == null) return;
             if (Camera.main != null) Camera.main.transform.SetParent(player.gameObject.transform);
+        }
+
         public override void OnEvent(OnPlayerDeath evnt)
         {
             BoltLog.Warn($"player with id {evnt.DeathId} dead");

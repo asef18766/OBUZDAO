@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Entity
 {
@@ -7,7 +8,7 @@ namespace Entity
         [SerializeField] private float moveScale = 0.5f;
         public void Move(Vector3 mvDir)
         {
-            transform.position += mvDir * moveScale;
+            GetComponent<Rigidbody2D>().velocity = mvDir * moveScale;
         }
     }
 }
