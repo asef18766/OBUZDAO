@@ -12,7 +12,7 @@ namespace Networking.MainGame
         }
         public override void OnEvent(OnUpdateBagContent evnt)
         {
-            BoltLog.Warn($"Client Receive bag content {Resources.Bag.DecodeBag(evnt.BagContent)}");
+            BoltLog.Warn($"Client Receive bag content [{string.Join("," , Resources.Bag.DecodeBag(evnt.BagContent))}]");
         }
 
         public override void ControlOfEntityGained(BoltEntity entity)
@@ -20,6 +20,9 @@ namespace Networking.MainGame
             var player = entity.GetComponent<Player>();
             if (player == null) return;
             if (Camera.main != null) Camera.main.transform.SetParent(player.gameObject.transform);
+        public override void OnEvent(OnPlayerDeath evnt)
+        {
+            BoltLog.Warn($"player with id {evnt.DeathId} dead");
         }
     }
 }

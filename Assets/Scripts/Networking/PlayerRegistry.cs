@@ -35,6 +35,19 @@ namespace Networking
                 BoltLog.Warn($"try to remove not existed player with connection id {playerId}");
             }
         }
+        public static void RemovePlayer(uint playerId)
+        {
+            if (PlayerList.ContainsKey(playerId))
+            {
+                BagManager.RemovePlayerBag(Convert.ToInt32(playerId));
+                BoltNetwork.Destroy(PlayerList[playerId]);
+                PlayerList.Remove(playerId);
+            }
+            else
+            {
+                BoltLog.Warn($"try to remove not existed player with connection id {playerId}");
+            }
+        }
 
         public static Player GetPlayerRef(uint playerId)
         {
