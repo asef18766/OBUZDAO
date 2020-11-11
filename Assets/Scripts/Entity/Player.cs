@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using Bolt;
-using UnityEditor.UI;
 using UnityEngine;
 
 namespace Entity
@@ -83,7 +82,16 @@ namespace Entity
                 input.Attack = true;
             }
             print("simulate controller");
-            entity.QueueInput(input);
+            try
+            {
+                entity.QueueInput(input, true);
+            }
+            catch(Exception e)
+            {
+                BoltLog.Error(e);
+                entity.ClearInputQueue();
+            }
+            
         }
 
         public override void MissingCommand(Command previous)

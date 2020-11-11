@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Entity;
+using UnityEngine;
 
 namespace Networking.MainGame
 {
@@ -14,5 +15,11 @@ namespace Networking.MainGame
             BoltLog.Warn($"Client Receive bag content {Resources.Bag.DecodeBag(evnt.BagContent)}");
         }
 
+        public override void ControlOfEntityGained(BoltEntity entity)
+        {
+            var player = entity.GetComponent<Player>();
+            if (player == null) return;
+            if (Camera.main != null) Camera.main.transform.SetParent(player.gameObject.transform);
+        }
     }
 }
