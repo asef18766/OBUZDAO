@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using System.Linq;
+using UniRx;
 using UniRx.Triggers;
 using Unity.Linq;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class GunUnitUI : MonoBehaviour
 {
     [SerializeField]
     private Image image;
+    [SerializeField]
+    private Text text;
     public static ReactiveProperty<GunUnitUI> selected { get; private set; } = new ReactiveProperty<GunUnitUI>(null);
     private bool loaded; // under bullet info
     private Transform container;
@@ -15,8 +18,9 @@ public class GunUnitUI : MonoBehaviour
     void Start()
     {
         this.container = transform.parent;
+        this.text.text = RandomString(3);
         var trigger = GetComponent<ObservableEventTrigger>();
-        // 
+        gameObject.AddComponent<Text>().text = RandomString(3);
         trigger.OnPointerClickAsObservable()
             .Where(_ => !this.loaded)
             .Do(_ => Debug.Log($"clicked! {gameObject.name}"))
@@ -57,5 +61,15 @@ public class GunUnitUI : MonoBehaviour
     {
         var buttonTransform = this.container.transform.GetChild(this.container.transform.childCount - 1);
         buttonTransform.gameObject.MoveToBeforeSelf(transform);
+    }
+
+    private static string RandomString(int length)
+    {
+        const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(
+            Enumerable.Repeat(chars, length)
+            .Select(s => s[Random.Range(0, s.Length)])
+            .ToArray()
+        );
     }
 }
