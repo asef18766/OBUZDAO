@@ -23,5 +23,11 @@ public class BulletInfo : MonoBehaviour
     public void AddGunUnit(GunUnitUI gunUnitUI)
     {
         gunUnitUI.transform.SetParent(this.content);
+        // remove from this when clicked
+        gunUnitUI.GetComponent<ObservableEventTrigger>()
+            .OnPointerClickAsObservable()
+            .Where(_ => !GunUnitUI.selected.Value)
+            .TakeWhile(_ => gunUnitUI.transform.parent == this.content.transform)
+            .Subscribe(_ => gunUnitUI.UnLoad());
     }
 }

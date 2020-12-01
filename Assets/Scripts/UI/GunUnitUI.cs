@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UniRx;
+﻿using UniRx;
 using UniRx.Triggers;
+using Unity.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,11 +10,15 @@ public class GunUnitUI : MonoBehaviour
     private Image image;
     public static ReactiveProperty<GunUnitUI> selected { get; private set; } = new ReactiveProperty<GunUnitUI>(null);
     private bool loaded; // under bullet info
+    private Transform container;
 
     void Start()
     {
+        this.container = transform.parent;
         var trigger = GetComponent<ObservableEventTrigger>();
+        // 
         trigger.OnPointerClickAsObservable()
+            .Where(_ => !this.loaded)
             .Do(_ => Debug.Log($"clicked! {gameObject.name}"))
             .Do(_ => GunUnitUI.selected.Value?.OnUnSelected())
             .Subscribe(_ => this.OnSelected())
@@ -33,6 +36,7 @@ public class GunUnitUI : MonoBehaviour
 
     public void AttatchToBulletInfo(BulletInfo info)
     {
+        this.loaded = true;
         info.AddGunUnit(GunUnitUI.selected.Value);
         this.OnUnSelected();
     }
@@ -47,5 +51,11 @@ public class GunUnitUI : MonoBehaviour
     {
         GunUnitUI.selected.Value = this;
         this.image.color = Color.red;
+    }
+
+    public void UnLoad()
+    {
+        var buttonTransform = this.container.transform.GetChild(this.container.transform.childCount - 1);
+        buttonTransform.gameObject.MoveToBeforeSelf(transform);
     }
 }
