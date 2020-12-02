@@ -99,7 +99,7 @@ MonoBehaviour:
   shootDir: {x: 0, y: 0}
   shooter: 0
   dmg: 0
-  moveSpeed: 0.4
+  moveSpeed: 0.8
 --- !u!114 &1620404801816130967
 MonoBehaviour:
   m_ObjectHideFlags: 0

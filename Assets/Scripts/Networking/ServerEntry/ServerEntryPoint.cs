@@ -8,7 +8,7 @@ namespace Networking.ServerEntry
 
         private void Awake()
         {
-            if (!isServer) return;
+            if(!isServer) return;
             if(BoltNetwork.IsRunning)
                 BoltLauncher.Shutdown();
             BoltLauncher.StartServer();

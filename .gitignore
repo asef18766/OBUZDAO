@@ -1,9 +1,5 @@
-# This .gitignore file should be placed at the root of your Unity 
-project directory
-#
-# Get latest from 
-https://github.com/github/gitignore/blob/master/Unity.gitignore
-#
+# This .gitignore file should be placed at the root of your Unity project directory
+# Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -16,8 +12,7 @@ https://github.com/github/gitignore/blob/master/Unity.gitignore
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
 
-# Asset meta data should only be ignored when the corresponding asset is 
-also ignored
+# Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
@@ -28,6 +23,8 @@ also ignored
 
 # Visual Studio cache directory
 .vs/
+# And this line for vscode
+.vscode/
 
 # Gradle cache directory
 .gradle/

@@ -10,7 +10,7 @@ namespace Networking.ServerEntry
         public override void BoltStartDone()
         {
             BoltLog.Warn("set loading MainGame Scene~~");
-            if (BoltNetwork.IsClient) return;
+            if(BoltNetwork.IsClient) return;
             var matchName = Guid.NewGuid().ToString();
 
             BoltMatchmaking.CreateSession(
